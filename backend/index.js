@@ -1,3 +1,4 @@
+require('dotenv').config({ path: './.env' });
 const express=require("express");
 const app=express();
 const path=require("path");
@@ -13,7 +14,11 @@ main().then(()=>{
 })
 
 async function main() {
-    await mongoose.connect("mongodb://127.0.0.1:27017/Portfolio");
+    console.log("MONGO_URI from .env:", process.env.MONGO_URI);
+    console.log("__dirname:", __dirname);
+    
+    mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true });
+
 }
 
 
@@ -30,7 +35,9 @@ app.get("/",(req,res)=>{
 
 app.post("/submit",async (req,res)=>{
    const data=new Form(req.body.data);
-   await data.save();
+   console.log(data);
+   const savedData=await data.save();
+   console.log("Saved to DB:", savedData); 
    res.redirect("/");
 })
 
