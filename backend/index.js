@@ -49,7 +49,7 @@ const formData = req.body.data;
 
         await sendMail(formData);
 
-        console.log("📦 Saved to DB:", savedData);
+        // console.log("📦 Saved to DB:", savedData);
         res.redirect("/");
     } catch (err) {
         console.error("Error:", err);
